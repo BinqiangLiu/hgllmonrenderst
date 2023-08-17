@@ -62,16 +62,7 @@ def get_conversation_chain(vector_store):
     )
     return conversation_chain
 
-#def handle_user_input(question):
-#    response = st.session_state.conversation({'question':question})
-#    st.session_state.chat_history = response['chat_history']
-#    for i, message in enumerate(st.session_state.chat_history):
-#        if i % 2 == 0:
-#            st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
-#        else:
-#            st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
-
-def handle_user_input(question):   
+def handle_user_input(question):
     if question !="":
         try:
             response = st.session_state.conversation({'question':question})
@@ -81,10 +72,7 @@ def handle_user_input(question):
                     st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
                 else:
                     st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
-            # 在循环结束后显示最后一条机器人的回复
-            if len(st.session_state.chat_history) % 2 == 1:
-                last_bot_message = st.session_state.chat_history[-1].content
-                st.write(bot_template.replace("{{MSG}}", last_bot_message), unsafe_allow_html=True)        
+                    st.write("---")
         except Exception as e:
             # Handle the error, e.g., print an error message or return a default text
             st.write("Documents not uploaded. Please upload your docs first and then enter your question.")     
@@ -94,19 +82,16 @@ def handle_user_input(question):
 
 def main():
     st.set_page_config(page_title='Chat with Your own PDFs', page_icon=':books:')
-    st.write('私有文档AI智能聊天助手 | Private document AI Chatbot')      
+    st.write('私有文档AI智能聊天助手 | Private document AI Chatbot')   
+    
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = None
-    
-    #st.header('Chat with Your own PDFs :books:')
+        st.session_state.chat_history = None  
+        
     question = st.text_input("Ask anything to your PDF: ")
     if question !="":
         handle_user_input(question)        
-#    else:
-#        st.write("Enter your question first."),
-#        st.stop()
 
     with st.sidebar:
         st.subheader("Upload your Documents Here: ")
