@@ -19,14 +19,9 @@ load_dotenv()
 openai.api_key = os.environ.get("OPEN_API_KEY")
 os.environ["OPENAI_API_KEY"] = openai.api_key
 
-#huggingface.api_token = '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'
-#os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface.api_token
-
-HUGGINGFACEHUB_API_TOKEN = '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'
-
-huggingface.api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 #huggingface.api_token = os.environ.get("HUGGINGFACEHUB_API_TOKEN")
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface.api_token
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = HUGGINGFACEHUB_API_TOKEN
 
 def get_pdf_text(pdf_files):
     
@@ -96,8 +91,6 @@ def handle_user_input(question):
         else:
             st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
 
-
-
 def main():
     load_dotenv()
     st.set_page_config(page_title='Chat with Your own PDFs', page_icon=':books:')
@@ -113,9 +106,11 @@ def main():
     st.header('Chat with Your own PDFs :books:')
     question = st.text_input("Ask anything to your PDF: ")
 
-    if question:
-        handle_user_input(question)
-    
+    if question !="":
+        handle_user_input(question)        
+    else:
+        st.write("Enter your question first."),
+        st.stop()
 
     with st.sidebar:
         st.subheader("Upload your Documents Here: ")
