@@ -92,10 +92,8 @@ def handle_user_input(question):
             st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
 
 def main():
-    load_dotenv()
     st.set_page_config(page_title='Chat with Your own PDFs', page_icon=':books:')
-
-    st.write(css, unsafe_allow_html=True)
+    st.write('私有文档AI智能聊天助手 | Private document AI Chatbot')
     
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
@@ -110,7 +108,7 @@ def main():
         handle_user_input(question)        
     else:
         st.write("Enter your question first."),
-        st.stop()
+        #st.stop()
 
     with st.sidebar:
         st.subheader("Upload your Documents Here: ")
@@ -125,14 +123,11 @@ def main():
                 # Get Text Chunks
                 text_chunks = get_chunk_text(raw_text)
                 
-
-                # Create Vector Store
-                
+                # Create Vector Store                
                 vector_store = get_vector_store(text_chunks)
                 st.write("DONE")
 
                 # Create conversation chain
-
                 st.session_state.conversation =  get_conversation_chain(vector_store)
 
 
