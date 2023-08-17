@@ -8,8 +8,14 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from htmlTemplates import bot_template, user_template, css
-
 from transformers import pipeline
+import os
+import sys
+
+load_dotenv()
+#openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.environ.get("OPEN_API_KEY")
+os.environ["OPENAI_API_KEY"] = openai.api_key
 
 def get_pdf_text(pdf_files):
     
@@ -38,11 +44,11 @@ def get_vector_store(text_chunks):
     
     # For OpenAI Embeddings
     
-    #embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings()
     
     # For Huggingface Embeddings
 
-    embeddings = HuggingFaceInstructEmbeddings(model_name = "hkunlp/instructor-xl")
+    #embeddings = HuggingFaceInstructEmbeddings(model_name = "hkunlp/instructor-xl")
 
     vectorstore = FAISS.from_texts(texts = text_chunks, embedding = embeddings)
     
