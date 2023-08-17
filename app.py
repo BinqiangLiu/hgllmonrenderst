@@ -84,8 +84,7 @@ def handle_user_input(question):
             # 在循环结束后显示最后一条机器人的回复
             if len(st.session_state.chat_history) % 2 == 1:
                 last_bot_message = st.session_state.chat_history[-1].content
-                st.write(bot_template.replace("{{MSG}}", last_bot_message), unsafe_allow_html=True)
-        
+                st.write(bot_template.replace("{{MSG}}", last_bot_message), unsafe_allow_html=True)        
         except Exception as e:
             # Handle the error, e.g., print an error message or return a default text
             st.write("Documents not uploaded. Please upload your docs first and then enter your question.")     
