@@ -19,6 +19,15 @@ load_dotenv()
 openai.api_key = os.environ.get("OPEN_API_KEY")
 os.environ["OPENAI_API_KEY"] = openai.api_key
 
+#huggingface.api_token = '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'
+#os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface.api_token
+
+HUGGINGFACEHUB_API_TOKEN = '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'
+
+huggingface.api_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+#huggingface.api_token = os.environ.get("HUGGINGFACEHUB_API_TOKEN")
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface.api_token
+
 def get_pdf_text(pdf_files):
     
     text = ""
