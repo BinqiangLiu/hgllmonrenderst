@@ -37,7 +37,7 @@ bot_template = '''
 user_template = '''
 <div class="chat-message user">
     <div class="avatar">
-        You: 
+    <img src="https://unicode.org/emoji/charts/full-emoji-list.html#1f600">You:        
     </div>    
     <div class="message">{{MSG}}</div>
 </div>
