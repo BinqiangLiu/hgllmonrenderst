@@ -62,26 +62,41 @@ def get_conversation_chain(vector_store):
     )
     return conversation_chain
 
+#def handle_user_input(question):
+#    response = st.session_state.conversation({'question':question})
+#    st.session_state.chat_history = response['chat_history']
+#    for i, message in enumerate(st.session_state.chat_history):
+#        if i % 2 == 0:
+#            st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+#        else:
+#            st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+
 def handle_user_input(question):
-    response = st.session_state.conversation({'question':question})
-    st.session_state.chat_history = response['chat_history']
-    for i, message in enumerate(st.session_state.chat_history):
-        if i % 2 == 0:
-            st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
-        else:
-            st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+    if question !="":
+        try:
+            response = st.session_state.conversation({'question':question})
+            st.session_state.chat_history = response['chat_history']
+            for i, message in enumerate(st.session_state.chat_history):
+                if i % 2 == 0:
+                    st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+                else:
+                    st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+        except Exception as e:
+            # Handle the error, e.g., print an error message or return a default text
+            st.write("Documents not uploaded. Please upload your docs first and then enter your question.")     
+    else:
+        st.write("Error within handle_user_input function. Enter your question first."),
+#        st.stop()
 
 def main():
     st.set_page_config(page_title='Chat with Your own PDFs', page_icon=':books:')
-    st.write('私有文档AI智能聊天助手 | Private document AI Chatbot')
-    
+    st.write('私有文档AI智能聊天助手 | Private document AI Chatbot')      
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
-
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
     
-    st.header('Chat with Your own PDFs :books:')
+    #st.header('Chat with Your own PDFs :books:')
     question = st.text_input("Ask anything to your PDF: ")
     if question !="":
         handle_user_input(question)        
